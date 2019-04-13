@@ -19,18 +19,18 @@
 # [
 
 # declare variables
-WORKSPACE=${AGENT_TEST_HOME}/workspace
-SOURCE_CODE_DIR=${WORKSPACE}/source
+WORKSPACE_DIR=${AGENT_TEST_HOME}/workspace
+SOURCE_CODE_DIR=${WORKSPACE_DIR}/source
 AGENT_SOURCE_CODE=${SOURCE_CODE_DIR}/skywalking
 VALIDATE_TOOL_SOURCE_CODE=${SOURCE_CODE_DIR}/validate-tool
 AGENT_WITH_OPTIONAL_PLUGIN_DIR=${SOURCE_CODE_DIR}/agent-with-optional-plugins
-REPORT_HOME=${WORKSPACE}/report
+REPORT_HOME=${WORKSPACE_DIR}/report
 AGENT_DIR=${SOURCE_CODE_DIR}/agent
 TESTCASES_HOME=${AGENT_TEST_HOME}/testcases
 VALIDATE_TOOL_REPO=https://github.com/SkywalkingTest/agent-integration-testtool.git
 VALIDATE_TOOL_REPO_BRANCH=master
 OVERWRITE_README="on"
-LOGS_DIR=${WORKSPACE}/logs
+LOGS_DIR=${WORKSPACE_DIR}/logs
 
 declare -a SCENARIOS
 if [ ${#_arg_scenario[@]} -eq 0 ]; then
@@ -59,7 +59,7 @@ echo -e "  - Scenarios:\t\t\t${SCENARIOS[@]}"
 
 # build workspace
 if [ "${_arg_clone_code}" = "on" ]; then
-    rm -rf ${WORKSPACE} && mkdir -p ${WORKSPACE} 
+    rm -rf ${WORKSPACE_DIR} && mkdir -p ${WORKSPACE_DIR} 
 fi
 
 rm -rf ${LOGS_DIR} && mkdir -p ${LOGS_DIR}
