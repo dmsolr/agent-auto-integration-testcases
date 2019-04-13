@@ -30,8 +30,6 @@ TESTCASES_HOME=${AGENT_TEST_HOME}/testcases
 VALIDATE_TOOL_REPO=https://github.com/SkywalkingTest/agent-integration-testtool.git
 VALIDATE_TOOL_REPO_BRANCH=master
 OVERWRITE_README="on"
-AGENT_COMMIT_ID=$(cd $AGENT_SOURCE_CODE && git rev-parse HEAD)
-TESTCASE_COMMIT_ID=$(cd $AGENT_TEST_HOME && git rev-parse HEAD)
 LOGS_DIR=${WORKSPACE}/logs
 
 declare -a SCENARIOS
@@ -50,10 +48,8 @@ fi
 echo "[INFO] Running parameteres:"
 echo -e "  - Agent repository:\t\t${_arg_agent_repo}"
 echo -e "  - Agent repository branch:\t${_arg_agent_repo_branch}"
-echo -e "  - Agent last commit id:\t${AGENT_COMMIT_ID}"
 echo -e "  - Testcase repository:\t${_arg_testcase_repo}"
 echo -e "  - Testcase repository branch:\t${_arg_testcase_repo_branch}"
-echo -e "  - Testcase last commit id:\t${TESTCASE_COMMIT_ID}"
 echo -e "  - Issue No:\t\t\t${_arg_issue_no}"
 echo -e "  - Build:\t\t\t${_arg_build}"
 echo -e "  - Report:\t\t\t${_arg_report}"
@@ -70,6 +66,9 @@ rm -rf ${LOGS_DIR} && mkdir -p ${LOGS_DIR}
 
 echo "[INFO] build workspace"
 ${AGENT_TEST_HOME}/.autotest/build_agent.sh --build ${_arg_build} ${_arg_agent_repo} ${_arg_agent_repo_branch} ${AGENT_SOURCE_CODE} >${LOGS_DIR}/agent-build.log && ${AGENT_TEST_HOME}/.autotest/build_validate_tool.sh --build ${_arg_build} ${VALIDATE_TOOL_REPO} ${VALIDATE_TOOL_REPO_BRANCH} ${VALIDATE_TOOL_SOURCE_CODE} && ${AGENT_TEST_HOME}/.autotest/build_report.sh ${REPORT_HOME}
+
+AGENT_COMMIT_ID=$(cd $AGENT_SOURCE_CODE && git rev-parse HEAD)
+TESTCASE_COMMIT_ID=$(cd $AGENT_TEST_HOME && git rev-parse HEAD)
 
 # build testcase
 echo "[INFO] build test case projects"

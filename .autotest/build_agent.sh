@@ -2,7 +2,7 @@
 #ARG_POSITIONAL_SINGLE([repo],[The repository of build project])
 #ARG_POSITIONAL_SINGLE([branch],[The branch name of build project])
 #ARG_POSITIONAL_SINGLE([target_dir],[The target directory])
-#ARG_OPTIONAL_SINGLE([build],[],[skip to build project],["on"])
+#ARG_OPTIONAL_SINGLE([build],[],[skip to build project],[on])
 #ARG_HELP([])
 #ARGBASH_GO()
 # needed because of Argbash --> m4_ignore([
@@ -40,7 +40,7 @@ print_help()
 	printf '\t%s\n' "<repo>: The repository of build project"
 	printf '\t%s\n' "<branch>: The branch name of build project"
 	printf '\t%s\n' "<target_dir>: The target directory"
-	printf '\t%s\n' "--build: skip to build project (default: '"on"')"
+	printf '\t%s\n' "--build: skip to build project (default: 'on')"
 	printf '\t%s\n' "-h, --help: Prints help"
 }
 
