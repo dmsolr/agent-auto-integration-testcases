@@ -45,7 +45,7 @@ java -DtestDate="$TEST_TIME" \
 	-DtestCasePath="$TEST_CASES_DIR" -DreportFilePath="$REPORT_DIR" \
 	-DcasesBranch="$NORMALIZED_TEST_CASES_BRANCH" -DcasesCommitId="${TEST_CASES_COMMITID}" \
 	-Dcommitter="$COMMITTER"	\
-	-jar ${VALIDATE_TOOL_JAR_HOME}/skywalking-autotest.jar 
+	-jar ${VALIDATE_TOOL_JAR_HOME}/skywalking-autotest.jar
 
 if [ ! -f "$REPORT_DIR/${AGENT_GIT_BRANCH}" ]; then
 	mkdir -p $REPORT_DIR/${AGENT_GIT_BRANCH}
@@ -56,8 +56,8 @@ if [ "${_arg_overwrite_readme}" = "on" ]; then
 fi
 
 if [ "${_arg_upload_report}" = "on" ]; then
-    cd ${_arg_target_dir} && git add $REPORT_DIR/README.md && git add $REPORT_DIR/${TEST_TIME_YEAR}/${TEST_TIME_MONTH}/${COMMITTER}/testReport-${NORMALIZED_TEST_CASES_BRANCH}-${TEST_TIME}.md && git commit -m "push report report-${TEST_TIME}.md" . && git push origin master
-    
+    cd ${_arg_target_dir} && git add $REPORT_DIR/README.md && git add $REPORT_DIR/${TEST_TIME_YEAR}/${TEST_TIME_MONTH}/${COMMITTER}/testReport-${NORMALIZED_TEST_CASES_BRANCH}-${TEST_TIME}.md && git commit -m "push report report-${TEST_TIME}.md" .
+
     if [ ! -z "$GITHUB_ACCOUNT" ]; then
 	    git config remote.origin.url https://${GITHUB_ACCOUNT}@github.com/SkywalkingTest/agent-integration-test-report.git
     fi

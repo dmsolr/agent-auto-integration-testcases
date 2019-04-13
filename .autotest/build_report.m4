@@ -4,5 +4,5 @@
 #ARG_HELP()
 #ARGBASH_GO
 # [
-${BUILD_HOME}/build_project.sh --build off https://github.com/SkywalkingTest/agent-integration-test-report.git master ${_arg_target_dir}
+${BUILD_HOME}/build_project.sh --build off https://github.com/SkywalkingTest/agent-integration-test-report.git master ${_arg_target_dir} && cd ${_arg_target_dir} && git checkout master
 # ]

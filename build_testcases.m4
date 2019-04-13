@@ -1,12 +1,13 @@
 #!/bin/bash
 #ARG_POSITIONAL_SINGLE([scenario_home], [The directory of scenario])
 #ARG_POSITIONAL_INF([scenarios], [The scenarios to be run])
-#ARG_OPTIONAL_SINGLE([target_dir], [o], [The target directory of output], "testcases")
-#ARG_OPTIONAL_SINGLE([agent_dir], [], [The directory of agent], "workspace/agent")
-#ARG_OPTIONAL_SINGLE([agent_with_optional_dir], [], [The directory of agent that it contain the optional plugins], "workspace/agent-with-optional-plugins")
+#ARG_OPTIONAL_SINGLE([target_dir], [o], [The target directory of output, This folder relative to directory of testcase repository.], "testcases")
+#ARG_OPTIONAL_SINGLE([agent_dir], [], [The directory of agent, This folder relative to directory of testcase repository.], "workspace/agent")
+#ARG_OPTIONAL_SINGLE([agent_with_optional_dir], [], [The directory of agent that it contain the optional plugins, This folder relative to directory of testcase repository.], "workspace/agent-with-optional-plugins")
 #ARG_OPTIONAL_SINGLE([collector_image_version], [], [The image version of collector], "6.0.0-2018")
 #ARG_OPTIONAL_SINGLE([skip_single_mode], [], [Skip build the scenario with single mode], [on])
 #ARG_OPTIONAL_BOOLEAN([skip_build], [], [Skip build the scenario project], [on])
+#DEFINE_SCRIPT_DIR([AGENT_TEST_HOME])
 #ARG_HELP()
 #ARGBASH_GO
 # [
@@ -55,9 +56,9 @@ cleanEnvVariables(){
 
 #declare variables
 SCENARIOS_HOME=`cd ${_arg_scenario_home} >/dev/null; pwd`
-CASES_HOME=`cd ${_arg_target_dir} >/dev/null; pwd`
-AGENT_DIR=`cd ${_arg_agent_dir} >/dev/null; pwd`
-AGENT_WITH_OPTIONAL_PLUGINS_DIR=`cd ${_arg_agent_with_optional_dir}`
+CASES_HOME=${SCENARIOS_HOME}/${_arg_target_dir}
+AGENT_DIR=${SCENARIOS_HOME}/${_arg_agent_dir}
+AGENT_WITH_OPTIONAL_PLUGINS_DIR=${SCENARIOS_HOME}/${_arg_agent_with_optional_dir}
 COLLECTOR_IMAGE_VERSION=${_arg_collector_image_version}
 ESCAPE_AGENT_DIR=$(echo "$AGENT_DIR" |sed -e 's/\//\\\//g' )
 ESCAPE_AGENT_WITH_OPTIONAL_PLUGINS_DIR=$(echo "$AGENT_WITH_OPTIONAL_PLUGINS_DIR" |sed -e 's/\//\\\//g' )
