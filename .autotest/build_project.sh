@@ -1,4 +1,4 @@
-#e!/bin/bash
+#!/bin/bash
 #ARG_POSITIONAL_SINGLE([repo],[The repository of build project])
 #ARG_POSITIONAL_SINGLE([branch],[The branch name of build project])
 #ARG_POSITIONAL_SINGLE([target_dir],[The target directory])

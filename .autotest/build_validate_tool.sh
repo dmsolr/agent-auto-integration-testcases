@@ -116,7 +116,7 @@ PRGDIR=`dirname "$PRG"`
 [ -z "$BUILD_HOME" ] && BUILD_HOME=`cd "$PRGDIR" >/dev/null; pwd`
 
 #declare variables
-WORKSPACE=${BUILD_HOME}/../workspace
+WORKSPACE_DIR=${BUILD_HOME}/../workspace
 
 ${BUILD_HOME}/build_project.sh --build ${_arg_build} ${_arg_repo} ${_arg_branch} ${_arg_target_dir}
 
@@ -126,7 +126,7 @@ if [ ! -f "${_arg_target_dir}/target/skywalking-autotest.jar" ]; then
 fi
 
 echo "[INFO] copy validate tool jar"
-cp ${_arg_target_dir}/target/skywalking-autotest.jar ${WORKSPACE}
+cp ${_arg_target_dir}/target/skywalking-autotest.jar ${WORKSPACE_DIR}
 
 #
 # ] <-- needed because of Argbash

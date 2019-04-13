@@ -38,7 +38,7 @@ parse_yaml() {
                     printf("%s%s%s=(\"%s\")\n", vn, $2, conj[indent-1],$3);
                 }
             }' |
-            
+
         sed -e 's/_=/+=/g' \
             -e '/\..*=/s|\.|_|' \
             -e '/\-.*=/s|\-|_|'
@@ -70,7 +70,7 @@ do
     SCENARIO_HOME=${SCENARIOS_HOME}/${SCENARIO}
     SCENARIO_CONFIG_FILE=${SCENARIO_HOME}/testcase.yml
     echo "[INFO] start to deploy ${SCENARIO_HOME}"
-    
+
     eval "$(parse_yaml "$SCENARIO_CONFIG_FILE")"
     SUPPORT_VERSIONS=${testcase_support_versions[@]}
     TEST_FRAMEWORK=${testcase_test_framework}
@@ -94,18 +94,18 @@ do
 	do
     if [ "${_arg_skip_build}" = "on" ]; then
       echo "[INFO] execute mvn package docker:build -P${SCENARIO}-${SUPPORT_VERSION}"
-      mvn clean package docker:build -P${SCENARIO}-${SUPPORT_VERSION} 
+      mvn clean package docker:build -P${SCENARIO}-${SUPPORT_VERSION}
     else
       echo "[INFO] skip build the case ${SCENARIO} - ${SUPPORT_VERSION}"
     fi
-        
+
 	  TEST_CASE_DIR=$CASES_HOME/$SCENARIO-$SUPPORT_VERSION && mkdir -p $TEST_CASE_DIR
-        
+
 		cp $SCENARIO_HOME/config/expectedData.yaml $TEST_CASE_DIR
 		cp $SCENARIO_HOME/config/docker-compose.yml $TEST_CASE_DIR
 		eval sed -i '' -e 's/\{CASES_IMAGE_VERSION\}/$SUPPORT_VERSION/' $TEST_CASE_DIR/docker-compose.yml
-		eval sed -i '' -e 's/\{COLLECTOR_IMAGE_VERSION\}/$COLLECTOR_IMAGE_VERSION/' $TEST_CASE_DIR/docker-compose.yml 
-    eval sed -i -e 's/\{AGENT_FILE_PATH\}/$AGENT_FILE_PATH/' $TEST_CASE_DIR/docker-compose.yml 
+		eval sed -i '' -e 's/\{COLLECTOR_IMAGE_VERSION\}/$COLLECTOR_IMAGE_VERSION/' $TEST_CASE_DIR/docker-compose.yml
+    eval sed -i -e 's/\{AGENT_FILE_PATH\}/$AGENT_FILE_PATH/' $TEST_CASE_DIR/docker-compose.yml
 		touch $TEST_CASE_DIR/testcase.desc
 		echo "case.testFramework=$TEST_FRAMEWORK" >> $TEST_CASE_DIR/testcase.desc
 		echo "case.testComponents=$SUPPORT_VERSION" >> $TEST_CASE_DIR/testcase.desc

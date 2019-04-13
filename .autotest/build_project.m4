@@ -1,4 +1,4 @@
-#e!/bin/bash
+#!/bin/bash
 #ARG_POSITIONAL_SINGLE([repo], [The repository of build project])
 #ARG_POSITIONAL_SINGLE([branch], [The branch name of build project])
 #ARG_POSITIONAL_SINGLE([target_dir], [The target directory])
@@ -13,7 +13,7 @@ if [ ! -d "${PROJECT_DIR}" ]; then
     git clone --depth 1 ${_arg_repo} ${PROJECT_DIR}
 fi
 
-cd ${PROJECT_DIR} && git fetch --tags --progress ${_arg_repo} +refs/heads/*:refs/remotes/origin/* && (git rev-parse origin/${_arg_branch}^{commit} | xargs git checkout -f ) && git submodule init && git submodule update 
+cd ${PROJECT_DIR} && git fetch --tags --progress ${_arg_repo} +refs/heads/*:refs/remotes/origin/* && (git rev-parse origin/${_arg_branch}^{commit} | xargs git checkout -f ) && git submodule init && git submodule update
 
 if [ "${_arg_skip_build}" = "on" ]; then
     cd ${PROJECT_DIR} && mvn clean package -Dmaven.test.skip=true

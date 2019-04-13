@@ -6,8 +6,8 @@
 #ARG_POSITIONAL_SINGLE([testcase_repo_branch],[The branch name of testcase repository to be run])
 #ARG_OPTIONAL_REPEATED([scenario],[],[The scenarios to be run])
 #ARG_OPTIONAL_SINGLE([issue_no],[],[The relate issue no],[UNKNOWN])
-#ARG_OPTIONAL_BOOLEAN([build],[],[Skip build projects.])
-#ARG_OPTIONAL_BOOLEAN([report],[],[Skip report the testcase to GitHub. off])
+#ARG_OPTIONAL_BOOLEAN([build],[],[Skip build projects.],[on])
+#ARG_OPTIONAL_BOOLEAN([report],[],[Skip report the testcase to GitHub],[off])
 #ARG_OPTIONAL_BOOLEAN([clone_code],[],[Skip clone the code],[off])
 #ARG_OPTIONAL_BOOLEAN([skip_single_mode_scenario],[],[Skip build the scenario with single mode],[on])
 #ARG_OPTIONAL_SINGLE([collector_image_version],[],[The docker image version of mock collector],["6.0.0-2018"])
@@ -44,7 +44,7 @@ _positionals=()
 # THE DEFAULTS INITIALIZATION - OPTIONALS
 _arg_scenario=()
 _arg_issue_no="UNKNOWN"
-_arg_build="off"
+_arg_build="on"
 _arg_report="off"
 _arg_clone_code="off"
 _arg_skip_single_mode_scenario="on"
@@ -62,8 +62,8 @@ print_help()
 	printf '\t%s\n' "<testcase_repo_branch>: The branch name of testcase repository to be run"
 	printf '\t%s\n' "--scenario: The scenarios to be run (empty by default)"
 	printf '\t%s\n' "--issue_no: The relate issue no (default: 'UNKNOWN')"
-	printf '\t%s\n' "--build, --no-build: Skip build projects. (off by default)"
-	printf '\t%s\n' "--report, --no-report: Skip report the testcase to GitHub. off (off by default)"
+	printf '\t%s\n' "--build, --no-build: Skip build projects. (on by default)"
+	printf '\t%s\n' "--report, --no-report: Skip report the testcase to GitHub (off by default)"
 	printf '\t%s\n' "--clone_code, --no-clone_code: Skip clone the code (off by default)"
 	printf '\t%s\n' "--skip_single_mode_scenario, --no-skip_single_mode_scenario: Skip build the scenario with single mode (on by default)"
 	printf '\t%s\n' "--collector_image_version: The docker image version of mock collector (default: '"6.0.0-2018"')"
@@ -242,7 +242,7 @@ TESTCASE_COMMIT_ID=$(cd $AGENT_TEST_HOME && git rev-parse HEAD)
 
 # build testcase
 echo "[INFO] build test case projects"
-${AGENT_TEST_HOME}/build_testcases.sh --collector_image_version ${_arg_collector_image_version} --skip_single_mode ${_arg_skip_single_mode_scenario} . ${SCENARIOS} > ${LOGS_DIR}/testcase-build.log
+${AGENT_TEST_HOME}/build_testcases.sh --collector_image_version ${_arg_collector_image_version} --skip_single_mode ${_arg_skip_single_mode_scenario} ${AGENT_TEST_HOME} ${SCENARIOS} > ${LOGS_DIR}/testcase-build.log
 
 # run test_case
 ${AGENT_TEST_HOME}/run.sh ${TESTCASES_HOME} >/dev/null

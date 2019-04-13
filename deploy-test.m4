@@ -6,8 +6,8 @@
 #ARG_POSITIONAL_SINGLE([testcase_repo_branch], [The branch name of testcase repository to be run])
 #ARG_OPTIONAL_REPEATED([scenario], [], [The scenarios to be run])
 #ARG_OPTIONAL_SINGLE([issue_no], [], [The relate issue no], [UNKNOWN])
-#ARG_OPTIONAL_BOOLEAN([build], [], [Skip build projects.])
-#ARG_OPTIONAL_BOOLEAN([report], [], [Skip report the testcase to GitHub]. [off])
+#ARG_OPTIONAL_BOOLEAN([build], [], [Skip build projects.], [on])
+#ARG_OPTIONAL_BOOLEAN([report], [], [Skip report the testcase to GitHub], [off])
 #ARG_OPTIONAL_BOOLEAN([clone_code], [], [Skip clone the code], [off])
 #ARG_OPTIONAL_BOOLEAN([skip_single_mode_scenario], [], [Skip build the scenario with single mode], [on])
 #ARG_OPTIONAL_SINGLE([collector_image_version],[], [The docker image version of mock collector], "6.0.0-2018")
@@ -59,7 +59,7 @@ echo -e "  - Scenarios:\t\t\t${SCENARIOS[@]}"
 
 # build workspace
 if [ "${_arg_clone_code}" = "on" ]; then
-    rm -rf ${WORKSPACE_DIR} && mkdir -p ${WORKSPACE_DIR} 
+    rm -rf ${WORKSPACE_DIR} && mkdir -p ${WORKSPACE_DIR}
 fi
 
 rm -rf ${LOGS_DIR} && mkdir -p ${LOGS_DIR}
@@ -72,7 +72,7 @@ TESTCASE_COMMIT_ID=$(cd $AGENT_TEST_HOME && git rev-parse HEAD)
 
 # build testcase
 echo "[INFO] build test case projects"
-${AGENT_TEST_HOME}/build_testcases.sh --collector_image_version ${_arg_collector_image_version} --skip_single_mode ${_arg_skip_single_mode_scenario} . ${SCENARIOS} > ${LOGS_DIR}/testcase-build.log
+${AGENT_TEST_HOME}/build_testcases.sh --collector_image_version ${_arg_collector_image_version} --skip_single_mode ${_arg_skip_single_mode_scenario} ${AGENT_TEST_HOME} ${SCENARIOS} > ${LOGS_DIR}/testcase-build.log
 
 # run test_case
 ${AGENT_TEST_HOME}/run.sh ${TESTCASES_HOME} >/dev/null
