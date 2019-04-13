@@ -229,7 +229,7 @@ echo -e "  - Scenarios:\t\t\t${SCENARIOS[@]}"
 
 # build workspace
 if [ "${_arg_clone_code}" = "on" ]; then
-    rm - rf ${WORKSPACE} && mkdir -p ${WORKSPACE}
+    rm -rf ${WORKSPACE} && mkdir -p ${WORKSPACE}
 fi
 
 rm -rf ${LOGS_DIR} && mkdir -p ${LOGS_DIR}
