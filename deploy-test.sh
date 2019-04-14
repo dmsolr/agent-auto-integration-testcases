@@ -242,8 +242,7 @@ TESTCASE_COMMIT_ID=$(cd $AGENT_TEST_HOME && git rev-parse HEAD)
 
 # build testcase
 echo "[INFO] build test case projects"
-echo "${AGENT_TEST_HOME}/build_testcases.sh --collector_image_version ${_arg_collector_image_version} --skip_single_mode ${_arg_skip_single_mode_scenario} ${AGENT_TEST_HOME} ${SCENARIOS[@]} > ${LOGS_DIR}/testcase-build.log"
-exit 0
+${AGENT_TEST_HOME}/build_testcases.sh --collector_image_version ${_arg_collector_image_version} --skip_single_mode ${_arg_skip_single_mode_scenario} ${AGENT_TEST_HOME} ${SCENARIOS[@]} > ${LOGS_DIR}/testcase-build.log
 
 # run test_case
 ${AGENT_TEST_HOME}/run.sh ${TESTCASES_HOME} >/dev/null
