@@ -66,7 +66,7 @@ ESCAPE_AGENT_WITH_OPTIONAL_PLUGINS_DIR=$(echo "$AGENT_WITH_OPTIONAL_PLUGINS_DIR"
 #
 rm -rf ${CASES_HOME} && mkdir -p ${CASES_HOME}
 
-for SCENARIO in ${_arg_scenarios}
+for SCENARIO in ${_arg_scenarios[@]}
 do
     SCENARIO_HOME=${SCENARIOS_HOME}/${SCENARIO}
     SCENARIO_CONFIG_FILE=${SCENARIO_HOME}/testcase.yml
