@@ -8,7 +8,8 @@
 #ARG_OPTIONAL_SINGLE([testcase_commitid],[ ],[The commit id of testcase repository],[])
 #ARG_OPTIONAL_SINGLE([agent_commitid],[],[The commit id of agent repository],[])
 #ARG_OPTIONAL_SINGLE([overwrite_readme],[],[Overwrite the README file],[off])
-#ARG_OPTIONAL_SINGLE([validate_tool_jar_home],[],[The directory that validate tool jar put on, This directory relative to current script directory.],[../workspace])
+#ARG_OPTIONAL_SINGLE([log_dir],[],[The directory of validate log put in],[workspace/logs])
+#ARG_OPTIONAL_SINGLE([validate_tool_jar_home],[],[The directory that validate tool jar put on, This directory relative to current script directory.],[workspace])
 #ARG_OPTIONAL_SINGLE([upload_report],[ ],[Upload the test report to Github],[off])
 #ARG_OPTIONAL_SINGLE([issue_no],[],[The issue no that this report relative to],[UNKNOWN])
 #ARG_OPTIONAL_SINGLE([validate_log_url_prefix],[],[The url prefix of validate log url])
@@ -48,7 +49,8 @@ _arg_testcase_branch="master"
 _arg_testcase_commitid=
 _arg_agent_commitid=
 _arg_overwrite_readme="off"
-_arg_validate_tool_jar_home="../workspace"
+_arg_log_dir="workspace/logs"
+_arg_validate_tool_jar_home="workspace"
 _arg_upload_report="off"
 _arg_issue_no="UNKNOWN"
 _arg_validate_log_url_prefix=
@@ -56,7 +58,7 @@ _arg_validate_log_url_prefix=
 
 print_help()
 {
-	printf 'Usage: %s [--agent_repo <arg>] [--agent_branch <arg>] [--testcase_repo <arg>] [--testcase_branch <arg>] [--testcase_commitid <arg>] [--agent_commitid <arg>] [--overwrite_readme <arg>] [--validate_tool_jar_home <arg>] [--upload_report <arg>] [--issue_no <arg>] [--validate_log_url_prefix <arg>] [-h|--help] <testcase_home> <target_dir>\n' "$0"
+	printf 'Usage: %s [--agent_repo <arg>] [--agent_branch <arg>] [--testcase_repo <arg>] [--testcase_branch <arg>] [--testcase_commitid <arg>] [--agent_commitid <arg>] [--overwrite_readme <arg>] [--log_dir <arg>] [--validate_tool_jar_home <arg>] [--upload_report <arg>] [--issue_no <arg>] [--validate_log_url_prefix <arg>] [-h|--help] <testcase_home> <target_dir>\n' "$0"
 	printf '\t%s\n' "<testcase_home>: The directory of testcase"
 	printf '\t%s\n' "<target_dir>: The target director that the test report put on"
 	printf '\t%s\n' "--agent_repo: The agent repository URL (default: 'https://github.com/apache/incubator-skywalking.git')"
@@ -66,7 +68,8 @@ print_help()
 	printf '\t%s\n' "--testcase_commitid: The commit id of testcase repository (no default)"
 	printf '\t%s\n' "--agent_commitid: The commit id of agent repository (no default)"
 	printf '\t%s\n' "--overwrite_readme: Overwrite the README file (default: 'off')"
-	printf '\t%s\n' "--validate_tool_jar_home: The directory that validate tool jar put on, This directory relative to current script directory. (default: '../workspace')"
+	printf '\t%s\n' "--log_dir: The directory of validate log put in (default: 'workspace/logs')"
+	printf '\t%s\n' "--validate_tool_jar_home: The directory that validate tool jar put on, This directory relative to current script directory. (default: 'workspace')"
 	printf '\t%s\n' "--upload_report: Upload the test report to Github (default: 'off')"
 	printf '\t%s\n' "--issue_no: The issue no that this report relative to (default: 'UNKNOWN')"
 	printf '\t%s\n' "--validate_log_url_prefix: The url prefix of validate log url (no default)"
@@ -136,6 +139,14 @@ parse_commandline()
 				;;
 			--overwrite_readme=*)
 				_arg_overwrite_readme="${_key##--overwrite_readme=}"
+				;;
+			--log_dir)
+				test $# -lt 2 && die "Missing value for the optional argument '$_key'." 1
+				_arg_log_dir="$2"
+				shift
+				;;
+			--log_dir=*)
+				_arg_log_dir="${_key##--log_dir=}"
 				;;
 			--validate_tool_jar_home)
 				test $# -lt 2 && die "Missing value for the optional argument '$_key'." 1
@@ -249,7 +260,7 @@ java -DtestDate="$TEST_TIME" \
 	-DtestCasePath="$TEST_CASES_DIR" -DreportFilePath="$REPORT_DIR" \
 	-DcasesBranch="$NORMALIZED_TEST_CASES_BRANCH" -DcasesCommitId="${TEST_CASES_COMMITID}" \
 	-Dcommitter="$COMMITTER"	\
-	-jar ${VALIDATE_TOOL_JAR_HOME}/skywalking-autotest.jar
+	-jar ${VALIDATE_TOOL_JAR_HOME}/skywalking-autotest.jar > ${_arg_log_dir}/validate_${TEST_TIME}.log
 
 if [ ! -f "$REPORT_DIR/${AGENT_GIT_BRANCH}" ]; then
 	mkdir -p $REPORT_DIR/${AGENT_GIT_BRANCH}
@@ -271,7 +282,7 @@ if [ "${_arg_upload_report}" = "on" ]; then
     if [ "$ISSUE_NO" = "UNKNOWN" ]; then
         echo "issue no is empty, ignore to push comment"
     else
-      curl --user ${GITHUB_ACCOUNT} -X POST -H "Content-Type: text/plain" -d "{\"body\":\"Here is the [test report](http://github.com/SkywalkingTest/agent-integration-test-report/tree/master/${TEST_TIME_YEAR}/${TEST_TIME_MONTH}/${COMMITTER}/testReport-${NORMALIZED_TEST_CASES_BRANCH}-${TEST_TIME}.md) and [validate logs](${VALIDATE_LOG_URL_PREFIX}/validate.log)\"}" https://api.github.com/repos/apache/incubator-skywalking/issues/${ISSUE_NO}/comments
+      curl --user ${GITHUB_ACCOUNT} -X POST -H "Content-Type: text/plain" -d "{\"body\":\"Here is the [test report](http://github.com/SkywalkingTest/agent-integration-test-report/tree/master/${TEST_TIME_YEAR}/${TEST_TIME_MONTH}/${COMMITTER}/testReport-${NORMALIZED_TEST_CASES_BRANCH}-${TEST_TIME}.md) and [validate logs](${VALIDATE_LOG_URL_PREFIX}/validate_${TEST_TIME}.log)\"}" https://api.github.com/repos/apache/incubator-skywalking/issues/${ISSUE_NO}/comments
 
       #echo "[INFO] Test report: http://github.com/SkywalkingTest/agent-integration-test-report/tree/master/${TEST_TIME_YEAR}/${TEST_TIME_MONTH}/${COMMITTER}/testReport-${NORMALIZED_TEST_CASES_BRANCH}-${TEST_TIME}.md"
       #echo "[INFO] Validate logs: ${VALIDATE_LOG_URL_PREFIX}/validate-$TEST_TIME.log"

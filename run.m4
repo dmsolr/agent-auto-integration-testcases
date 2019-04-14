@@ -30,7 +30,7 @@ deployTestCase(){
 	eval sed -i -e 's/\{SERVER_OUTPUT_PORT\}/$SERVER_OUTPUT_PORT/' $CASE_DIR/expectedData.yaml # replace value of `{SERVER_OUTPUT_PORT}` parameter in testcase.desc
 	cd $CASE_DIR && docker-compose rm -s -f -v 
 	
-  docker-compose -f $CASE_DIR/docker-compose.yml up -d > /dev/null
+  docker-compose -f $CASE_DIR/docker-compose.yml up -d 
 	sleep 60
    
 	CASE_REQUEST_URL=$(grep "case.request_url" $CASE_DIR/testcase.desc | awk -F '=' '{print $2}')
@@ -58,6 +58,7 @@ do
 	RUNNTING_INDEXES+=($i);
 done
 
+echo ${TESTCASES[@]}
 while [ ${#TESTCASES[@]} -gt 0 ]; do
 	FINISHED_INDEX_ARRAY=($(grep  -h 'FINISHED' $RUNTIME_DIR/* | awk -F ' ' '{print $1;}'))
 	RUNNTING_INDEXES+=(${FINISHED_INDEX_ARRAY[@]})
@@ -71,11 +72,12 @@ while [ ${#TESTCASES[@]} -gt 0 ]; do
 	fi
 	#
 	TEST_CASE=${TESTCASES[0]}
-	TESTCASES=("${TEST_CASES[@]:1}")
+	TESTCASES=("${TESTCASES[@]:1}")
 	RUNNING_INDEX=${RUNNTING_INDEXES[0]}
 	RUNNTING_INDEXES=("${RUNNTING_INDEXES[@]:1}")
 	#
 	echo "$RUNNING_INDEX STARTED" > $RUNTIME_DIR/$TEST_CASE.rid
+  echo ${TEST_CASE} ${RUNNING_SIZE} ${RUNNING_INDEX}
 	deployTestCase $TEST_CASE $RUNNING_SIZE $RUNNING_INDEX &
 	echo "${TEST_CASE} start to running"
 done

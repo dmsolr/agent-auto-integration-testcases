@@ -8,7 +8,8 @@
 #ARG_OPTIONAL_SINGLE([testcase_commitid], [] , [The commit id of testcase repository], [])
 #ARG_OPTIONAL_SINGLE([agent_commitid], [], [The commit id of agent repository], [])
 #ARG_OPTIONAL_SINGLE([overwrite_readme], [], [Overwrite the README file], [off])
-#ARG_OPTIONAL_SINGLE([validate_tool_jar_home], [], [The directory that validate tool jar put on, This directory relative to current script directory.], [../workspace])
+#ARG_OPTIONAL_SINGLE([log_dir], [], [The directory of validate log put in], [workspace/logs])
+#ARG_OPTIONAL_SINGLE([validate_tool_jar_home], [], [The directory that validate tool jar put on, This directory relative to current script directory.], [workspace])
 #ARG_OPTIONAL_SINGLE([upload_report], [] , [Upload the test report to Github], [off])
 #ARG_OPTIONAL_SINGLE([issue_no], [], [The issue no that this report relative to], [UNKNOWN])
 #ARG_OPTIONAL_SINGLE([validate_log_url_prefix], [], [The url prefix of validate log url])
@@ -45,7 +46,7 @@ java -DtestDate="$TEST_TIME" \
 	-DtestCasePath="$TEST_CASES_DIR" -DreportFilePath="$REPORT_DIR" \
 	-DcasesBranch="$NORMALIZED_TEST_CASES_BRANCH" -DcasesCommitId="${TEST_CASES_COMMITID}" \
 	-Dcommitter="$COMMITTER"	\
-	-jar ${VALIDATE_TOOL_JAR_HOME}/skywalking-autotest.jar
+	-jar ${VALIDATE_TOOL_JAR_HOME}/skywalking-autotest.jar > ${_arg_log_dir}/validate_${TEST_TIME}.log
 
 if [ ! -f "$REPORT_DIR/${AGENT_GIT_BRANCH}" ]; then
 	mkdir -p $REPORT_DIR/${AGENT_GIT_BRANCH}
@@ -67,7 +68,7 @@ if [ "${_arg_upload_report}" = "on" ]; then
     if [ "$ISSUE_NO" = "UNKNOWN" ]; then
         echo "issue no is empty, ignore to push comment"
     else
-      curl --user ${GITHUB_ACCOUNT} -X POST -H "Content-Type: text/plain" -d "{\"body\":\"Here is the [test report](http://github.com/SkywalkingTest/agent-integration-test-report/tree/master/${TEST_TIME_YEAR}/${TEST_TIME_MONTH}/${COMMITTER}/testReport-${NORMALIZED_TEST_CASES_BRANCH}-${TEST_TIME}.md) and [validate logs](${VALIDATE_LOG_URL_PREFIX}/validate.log)\"}" https://api.github.com/repos/apache/incubator-skywalking/issues/${ISSUE_NO}/comments
+      curl --user ${GITHUB_ACCOUNT} -X POST -H "Content-Type: text/plain" -d "{\"body\":\"Here is the [test report](http://github.com/SkywalkingTest/agent-integration-test-report/tree/master/${TEST_TIME_YEAR}/${TEST_TIME_MONTH}/${COMMITTER}/testReport-${NORMALIZED_TEST_CASES_BRANCH}-${TEST_TIME}.md) and [validate logs](${VALIDATE_LOG_URL_PREFIX}/validate_${TEST_TIME}.log)\"}" https://api.github.com/repos/apache/incubator-skywalking/issues/${ISSUE_NO}/comments
 
       #echo "[INFO] Test report: http://github.com/SkywalkingTest/agent-integration-test-report/tree/master/${TEST_TIME_YEAR}/${TEST_TIME_MONTH}/${COMMITTER}/testReport-${NORMALIZED_TEST_CASES_BRANCH}-${TEST_TIME}.md"
       #echo "[INFO] Validate logs: ${VALIDATE_LOG_URL_PREFIX}/validate-$TEST_TIME.log"
