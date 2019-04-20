@@ -248,7 +248,7 @@ ${AGENT_TEST_HOME}/build_testcases.sh --collector_image_version ${_arg_collector
 ${AGENT_TEST_HOME}/run.sh -m ${_arg_parallel_run_size} ${TESTCASES_HOME} >/dev/null
 
 # generate report
-${AGENT_TEST_HOME}/generate-report.sh --agent_repo ${_arg_agent_repo} --agent_branch ${_arg_agent_repo_branch} --testcase_repo ${_arg_testcase_repo} --testcase_branch ${_arg_testcase_repo_branch} --agent_commitid ${AGENT_COMMIT_ID} --testcase_commitid ${TESTCASE_COMMIT_ID} --overwrite_readme ${OVERWRITE_README} --upload_report ${_arg_report} --issue_no ${_arg_issue_no} --validate_log_url_prefix ${_arg_validate_log_url_prefix} ${TESTCASES_HOME} ${REPORT_HOME} > ${LOGS_DIR}/validate.log
+${AGENT_TEST_HOME}/generate-report.sh --agent_repo ${_arg_agent_repo} --agent_branch ${_arg_agent_repo_branch} --testcase_repo ${_arg_testcase_repo} --testcase_branch ${_arg_testcase_repo_branch} --agent_commitid ${AGENT_COMMIT_ID} --testcase_commitid ${TESTCASE_COMMIT_ID} --overwrite_readme ${OVERWRITE_README} --upload_report ${_arg_report} --issue_no ${_arg_issue_no} --validate_log_url_prefix ${_arg_validate_log_url_prefix} ${TESTCASES_HOME} ${REPORT_HOME} > ${LOGS_DIR}/test_report.log
 
 #
 # ] <-- needed because of Argbash
