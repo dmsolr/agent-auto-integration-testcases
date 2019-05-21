@@ -1,0 +1,25 @@
+#
+# Test case project define.
+#
+# Note: Test case project must a project that support output service.
+#
+testcase:
+  #
+  # The request url of current test cases.
+  #
+  request_url: http://localhost:{SERVER_OUTPUT_PORT}/solrj-scenario/case/solrj
+  #
+  # The framework name that need tested.
+  #
+  test_framework: solrj
+
+  #
+  # The running mode:  TOGETHER(default), SINGLE, WITH_OPTIONAL
+  #
+  running_mode: WITH_OPTIONAL
+
+  #
+  # The framework version list of current test case supported
+  #
+  support_versions:
+    - 7.7.1
