@@ -19,11 +19,11 @@ segmentItems:
       tags:
       - {key: docsSize, value: gt 0}
       - {key: commitWithin, value: '-1'}
-      - {key: qt, value: not null}
       - {key: action, value: ADD}
       - {key: path, value: /update}
       - {key: collection, value: not null}
       - {key: method, value: POST}
+      - {key: qt, value: not null}
       - {key: status, value: eq 0}
       - {key: QTime, value: gt 0}
       - {key: contentType, value: not null}
@@ -33,6 +33,7 @@ segmentItems:
       - {key: elapseTime, value: gt 0}
       startTime: gt 0
       endTime: gt 0
+      componentId: 62
       componentName: ''
       isError: false
       spanType: Exit
@@ -47,11 +48,11 @@ segmentItems:
       tags:
       - {key: commit, value: 'true'}
       - {key: softCommit, value: 'false'}
-      - {key: qt, value: /update}
       - {key: action, value: COMMIT}
       - {key: path, value: /update}
       - {key: collection, value: mycore}
       - {key: method, value: POST}
+      - {key: qt, value: /update}
       - {key: status, value: eq 0}
       - {key: QTime, value: gt 0}
       - {key: contentType, value: not null}
@@ -61,6 +62,7 @@ segmentItems:
       - {key: elapseTime, value: gt 0}
       startTime: gt 0
       endTime: gt 0
+      componentId: 62
       componentName: ''
       isError: false
       spanType: Exit
@@ -75,11 +77,11 @@ segmentItems:
       tags:
       - {key: optimize, value: eq true}
       - {key: maxOptimizeSegs, value: not null}
-      - {key: qt, value: /update}
       - {key: action, value: OPTIMIZE}
       - {key: path, value: /update}
       - {key: collection, value: not null}
       - {key: method, value: not null}
+      - {key: qt, value: /update}
       - {key: status, value: eq 0}
       - {key: QTime, value: ge 0}
       - {key: contentType, value: not null}
@@ -89,6 +91,7 @@ segmentItems:
       - {key: elapseTime, value: gt 0}
       startTime: gt 0
       endTime: gt 0
+      componentId: 62
       componentName: ''
       isError: false
       spanType: Exit
@@ -101,10 +104,10 @@ segmentItems:
       spanId: 4
       spanLayer: Database
       tags:
-      - {key: qt, value: /select}
       - {key: path, value: /select}
       - {key: collection, value: not null}
       - {key: method, value: GET}
+      - {key: qt, value: /select}
       - {key: numFound, value: ge 0}
       - {key: contentType, value: not null}
       - {key: contentEncoding, value: not null}
@@ -113,6 +116,7 @@ segmentItems:
       - {key: elapseTime, value: gt 0}
       startTime: gt 0
       endTime: gt 0
+      componentId: 62
       componentName: ''
       isError: false
       spanType: Exit
@@ -125,10 +129,10 @@ segmentItems:
       spanId: 5
       spanLayer: Database
       tags:
-      - {key: qt, value: /get}
       - {key: path, value: /get}
       - {key: collection, value: not null}
       - {key: method, value: GET}
+      - {key: qt, value: /get}
       - {key: numFound, value: ge 0}
       - {key: contentType, value: not null}
       - {key: contentEncoding, value: not null}
@@ -159,11 +163,11 @@ segmentItems:
       tags:
       - {key: delete.type, value: deleteByIds}
       - {key: delete.by, value: not null}
-      - {key: qt, value: /update}
       - {key: action, value: DELETE}
       - {key: path, value: /update}
       - {key: collection, value: mycore}
       - {key: method, value: POST}
+      - {key: qt, value: /update}
       - {key: status, value: eq 0}
       - {key: QTime, value: ge 0}
       - {key: contentType, value: not null}
@@ -188,11 +192,11 @@ segmentItems:
       tags:
       - {key: delete.type, value: deleteByQuery}
       - {key: delete.by, value: not null}
-      - {key: qt, value: /update}
       - {key: action, value: DELETE}
       - {key: path, value: /update}
       - {key: collection, value: mycore}
       - {key: method, value: POST}
+      - {key: qt, value: /update}
       - {key: status, value: eq 0}
       - {key: QTime, value: ge 0}
       - {key: contentType, value: not null}
