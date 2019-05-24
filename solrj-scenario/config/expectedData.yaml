@@ -215,5 +215,5 @@ segmentItems:
       peer: ''
       peerId: 0
       tags:
-      - {key: url, value: 'http://localhost:18080/solrj-scenario/case/solrj'}
+      - {key: url, value: 'http://localhost:{SERVER_OUTPUT_PORT}/solrj-scenario/case/solrj'}
       - {key: http.method, value: GET}
