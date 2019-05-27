@@ -4,7 +4,10 @@ registryItems:
   instances:
   - {solrj-scenario: nq 0}
   operationNames:
-  - solrj-scenario: [solrJ/mycore/update/ADD,solrJ/mycore/update/COMMIT,solrJ/mycore/update/OPTIMIZE,solrJ/mycore/select,solrJ/mycore/get,solrJ/mycore/update/DELETE,/solrj-scenario/case/solrj]
+  - solrj-scenario: [/solrj-scenario/case/solrj, solrJ/mycore/update/COMMIT, solrJ/mycore/update/DELETE_BY_IDS,
+      solrJ/mycore/select, solrJ/mycore/update/DELETE_BY_QUERY, solrJ/mycore/get,
+      solrJ/mycore/update/OPTIMIZE, solrJ/mycore/update/ADD]
+  heartbeat: []
 segmentItems:
 - applicationCode: solrj-scenario
   segmentSize: 1
@@ -16,138 +19,95 @@ segmentItems:
       parentSpanId: 0
       spanId: 1
       spanLayer: Database
-      tags:
-      - {key: docsSize, value: gt 0}
-      - {key: commitWithin, value: '-1'}
-      - {key: action, value: ADD}
-      - {key: path, value: /update}
-      - {key: collection, value: not null}
-      - {key: method, value: POST}
-      - {key: qt, value: not null}
-      - {key: status, value: eq 0}
-      - {key: QTime, value: gt 0}
-      - {key: contentType, value: not null}
-      - {key: contentEncoding, value: not null}
-      - {key: statusCode, value: not null}
-      - {key: contentLength, value: ge 0}
-      - {key: elapseTime, value: gt 0}
       startTime: gt 0
       endTime: gt 0
       componentId: 63
       componentName: ''
       isError: false
       spanType: Exit
-      peer: 'solr-server:8983'
+      peer: solr-server:8983
       peerId: 0
-
+      tags:
+      - {key: docsSize, value: gt 0}
+      - {key: commitWithin, value: not null}
+      - {key: collection, value: not null}
+      - {key: status, value: eq 0}
+      - {key: QTime, value: ge 0}
     - operationName: solrJ/mycore/update/COMMIT
       operationId: 0
       parentSpanId: 0
       spanId: 2
       spanLayer: Database
-      tags:
-      - {key: commit, value: 'true'}
-      - {key: softCommit, value: 'false'}
-      - {key: action, value: COMMIT}
-      - {key: path, value: /update}
-      - {key: collection, value: mycore}
-      - {key: method, value: POST}
-      - {key: qt, value: /update}
-      - {key: status, value: eq 0}
-      - {key: QTime, value: gt 0}
-      - {key: contentType, value: not null}
-      - {key: contentEncoding, value: not null}
-      - {key: statusCode, value: not null}
-      - {key: contentLength, value: ge 0}
-      - {key: elapseTime, value: gt 0}
       startTime: gt 0
       endTime: gt 0
       componentId: 63
       componentName: ''
       isError: false
       spanType: Exit
-      peer: 'solr-server:8983'
+      peer: solr-server:8983
       peerId: 0
-
+      tags:
+      - {key: softCommit, value: not null}
+      - {key: collection, value: not null}
+      - {key: status, value: eq 0}
+      - {key: QTime, value: ge 0}
     - operationName: solrJ/mycore/update/OPTIMIZE
       operationId: 0
       parentSpanId: 0
       spanId: 3
       spanLayer: Database
-      tags:
-      - {key: optimize, value: eq true}
-      - {key: maxOptimizeSegs, value: not null}
-      - {key: action, value: OPTIMIZE}
-      - {key: path, value: /update}
-      - {key: collection, value: not null}
-      - {key: method, value: not null}
-      - {key: qt, value: /update}
-      - {key: status, value: eq 0}
-      - {key: QTime, value: ge 0}
-      - {key: contentType, value: not null}
-      - {key: contentEncoding, value: not null}
-      - {key: statusCode, value: not null}
-      - {key: contentLength, value: ge 0}
-      - {key: elapseTime, value: gt 0}
       startTime: gt 0
       endTime: gt 0
       componentId: 63
       componentName: ''
       isError: false
       spanType: Exit
-      peer: 'solr-server:8983'
+      peer: solr-server:8983
       peerId: 0
-
+      tags:
+      - {key: maxOptimizeSegs, value: not null}
+      - {key: collection, value: not null}
+      - {key: status, value: eq 0}
+      - {key: QTime, value: gt 0}
     - operationName: solrJ/mycore/select
       operationId: 0
       parentSpanId: 0
       spanId: 4
       spanLayer: Database
-      tags:
-      - {key: path, value: /select}
-      - {key: collection, value: not null}
-      - {key: method, value: GET}
-      - {key: qt, value: /select}
-      - {key: numFound, value: ge 0}
-      - {key: contentType, value: not null}
-      - {key: contentEncoding, value: not null}
-      - {key: statusCode, value: not null}
-      - {key: contentLength, value: ge 0}
-      - {key: elapseTime, value: gt 0}
       startTime: gt 0
       endTime: gt 0
       componentId: 63
       componentName: ''
       isError: false
       spanType: Exit
-      peer: 'solr-server:8983'
+      peer: solr-server:8983
       peerId: 0
-
+      tags:
+      - {key: sort, value: not null}
+      - {key: start, value: ge 0}
+      - {key: qt, value: /select}
+      - {key: collection, value: not null}
+      - {key: numFound, value: ge 0}
     - operationName: solrJ/mycore/get
       operationId: 0
       parentSpanId: 0
       spanId: 5
       spanLayer: Database
-      tags:
-      - {key: path, value: /get}
-      - {key: collection, value: not null}
-      - {key: method, value: GET}
-      - {key: qt, value: /get}
-      - {key: numFound, value: ge 0}
-      - {key: contentType, value: not null}
-      - {key: contentEncoding, value: not null}
-      - {key: statusCode, value: not null}
-      - {key: contentLength, value: ge 0}
-      - {key: elapseTime, value: gt 0}
       startTime: gt 0
       endTime: gt 0
+      componentId: 63
       componentName: ''
       isError: false
       spanType: Exit
-      peer: 'solr-server:8983'
+      peer: solr-server:8983
       peerId: 0
-
-    - operationName: solrJ/mycore/update/DELETE
+      tags:
+      - {key: sort, value: not null}
+      - {key: start, value: ge 0}
+      - {key: qt, value: /get}
+      - {key: collection, value: not null}
+      - {key: numFound, value: ge 0}
+    - operationName: solrJ/mycore/update/DELETE_BY_IDS
       operationId: 0
       parentSpanId: 0
       spanId: 6
@@ -161,22 +121,11 @@ segmentItems:
       peer: solr-server:8983
       peerId: 0
       tags:
-      - {key: delete.type, value: deleteByIds}
       - {key: delete.by, value: not null}
-      - {key: action, value: DELETE}
-      - {key: path, value: /update}
-      - {key: collection, value: mycore}
-      - {key: method, value: POST}
-      - {key: qt, value: /update}
+      - {key: collection, value: not null}
       - {key: status, value: eq 0}
       - {key: QTime, value: ge 0}
-      - {key: contentType, value: not null}
-      - {key: contentEncoding, value: not null}
-      - {key: statusCode, value: not null}
-      - {key: contentLength, value: ge 0}
-      - {key: elapseTime, value: gt 0}
-
-    - operationName: solrJ/mycore/update/DELETE
+    - operationName: solrJ/mycore/update/DELETE_BY_QUERY
       operationId: 0
       parentSpanId: 0
       spanId: 7
@@ -190,21 +139,10 @@ segmentItems:
       peer: solr-server:8983
       peerId: 0
       tags:
-      - {key: delete.type, value: deleteByQuery}
       - {key: delete.by, value: not null}
-      - {key: action, value: DELETE}
-      - {key: path, value: /update}
-      - {key: collection, value: mycore}
-      - {key: method, value: POST}
-      - {key: qt, value: /update}
+      - {key: collection, value: not null}
       - {key: status, value: eq 0}
-      - {key: QTime, value: ge 0}
-      - {key: contentType, value: not null}
-      - {key: contentEncoding, value: not null}
-      - {key: statusCode, value: not null}
-      - {key: contentLength, value: ge 0}
-      - {key: elapseTime, value: gt 0}
-
+      - {key: QTime, value: gt 0}
     - operationName: /solrj-scenario/case/solrj
       operationId: 0
       parentSpanId: -1
@@ -219,5 +157,5 @@ segmentItems:
       peer: ''
       peerId: 0
       tags:
-      - {key: url, value: 'http://localhost:{SERVER_OUTPUT_PORT}/solrj-scenario/case/solrj'}
+      - {key: url, value: 'http://localhost:18080/solrj-scenario/case/solrj'}
       - {key: http.method, value: GET}
