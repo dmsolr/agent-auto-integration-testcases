@@ -28,10 +28,7 @@ segmentItems:
       peer: solr-server:8983
       peerId: 0
       tags:
-      - {key: docsSize, value: gt 0}
-      - {key: commitWithin, value: not null}
-      - {key: collection, value: not null}
-      - {key: status, value: eq 0}
+      - {key: db.type, value: eq Solr}
       - {key: QTime, value: ge 0}
     - operationName: solrJ/mycore/update/COMMIT
       operationId: 0
@@ -47,9 +44,7 @@ segmentItems:
       peer: solr-server:8983
       peerId: 0
       tags:
-      - {key: softCommit, value: not null}
-      - {key: collection, value: not null}
-      - {key: status, value: eq 0}
+      - {key: db.type, value: eq Solr}
       - {key: QTime, value: ge 0}
     - operationName: solrJ/mycore/update/OPTIMIZE
       operationId: 0
@@ -65,9 +60,7 @@ segmentItems:
       peer: solr-server:8983
       peerId: 0
       tags:
-      - {key: maxOptimizeSegs, value: not null}
-      - {key: collection, value: not null}
-      - {key: status, value: eq 0}
+      - {key: db.type, value: eq Solr}
       - {key: QTime, value: gt 0}
     - operationName: solrJ/mycore/select
       operationId: 0
@@ -83,10 +76,9 @@ segmentItems:
       peer: solr-server:8983
       peerId: 0
       tags:
-      - {key: sort, value: not null}
+      - {key: db.type, value: eq Solr}
       - {key: start, value: ge 0}
       - {key: qt, value: /select}
-      - {key: collection, value: not null}
       - {key: numFound, value: ge 0}
     - operationName: solrJ/mycore/get
       operationId: 0
@@ -102,10 +94,9 @@ segmentItems:
       peer: solr-server:8983
       peerId: 0
       tags:
-      - {key: sort, value: not null}
+      - {key: db.type, value: eq Solr}
       - {key: start, value: ge 0}
       - {key: qt, value: /get}
-      - {key: collection, value: not null}
       - {key: numFound, value: ge 0}
     - operationName: solrJ/mycore/update/DELETE_BY_IDS
       operationId: 0
@@ -121,9 +112,7 @@ segmentItems:
       peer: solr-server:8983
       peerId: 0
       tags:
-      - {key: delete.by, value: not null}
-      - {key: collection, value: not null}
-      - {key: status, value: eq 0}
+      - {key: db.type, value: eq Solr}
       - {key: QTime, value: ge 0}
     - operationName: solrJ/mycore/update/DELETE_BY_QUERY
       operationId: 0
@@ -139,9 +128,7 @@ segmentItems:
       peer: solr-server:8983
       peerId: 0
       tags:
-      - {key: delete.by, value: not null}
-      - {key: collection, value: not null}
-      - {key: status, value: eq 0}
+      - {key: db.type, value: eq Solr}
       - {key: QTime, value: gt 0}
     - operationName: /solrj-scenario/case/solrj
       operationId: 0
