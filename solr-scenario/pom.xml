@@ -26,7 +26,7 @@
     <dependencies>
         <dependency>
             <groupId>org.apache.solr</groupId>
-            <artifactId>solr-solr</artifactId>
+            <artifactId>solr-core</artifactId>
             <version>${test.framework.version}</version>
         </dependency>
         <dependency>
@@ -78,17 +78,6 @@
             <id>solr-scenario-7.7.1</id>
             <properties>
                 <test.framework.version>7.7.1</test.framework.version>
-                <test.framework.version>7.7.0</test.framework.version>
-                <test.framework.version>7.6.0</test.framework.version>
-                <test.framework.version>7.5.0</test.framework.version>
-                <test.framework.version>7.4.0</test.framework.version>
-                <test.framework.version>7.3.1</test.framework.version>
-                <test.framework.version>7.3.0</test.framework.version>
-                <test.framework.version>7.2.1</test.framework.version>
-                <test.framework.version>7.2.0</test.framework.version>
-                <test.framework.version>7.1.0</test.framework.version>
-                <test.framework.version>7.0.1</test.framework.version>
-                <test.framework.version>7.0.0</test.framework.version>
             </properties>
         </profile>
     </profiles>
@@ -124,7 +113,7 @@
                 <version>0.4.13</version>
                 <configuration>
                     <skipDocker>false</skipDocker>
-                    <imageName>skywalking/solrj-scenario</imageName>
+                    <imageName>skywalking/solr-scenario</imageName>
                     <imageTags>
                         <imageTag>${docker.image.version}</imageTag>
                     </imageTags>

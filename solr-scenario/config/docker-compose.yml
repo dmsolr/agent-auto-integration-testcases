@@ -1,7 +1,7 @@
 version: '2.1'
+services:
   solr1:
-    image: solr:{CASES_IMAGE_VERSION}
-    container_name: solr1
+    image: solr:7.7.1
     volumes:
       - /root/skywalking/skywalking-agent:/usr/local/skywalking-solr-scenario/agent
     ports:
@@ -15,8 +15,7 @@ version: '2.1'
       - zoo1
 
   solr2:
-    image: solr:{CASES_IMAGE_VERSION}
-    container_name: solr2
+    image: solr:7.7.1
     volumes:
       - /root/skywalking/skywalking-agent:/usr/local/skywalking-solr-scenario/agent
     ports:
@@ -31,7 +30,6 @@ version: '2.1'
 
   zoo1:
     image: zookeeper:3.4.13
-    container_name: zoo1
     restart: always
     hostname: zoo1
     ports:
@@ -51,11 +49,13 @@ version: '2.1'
     environment:
       - COLLECTOR_SERVER=mock-collector:19876
       - ZK_HOST=zoo1:2181
+      - SOLR_HOST=solr1:8983
     links:
       - mock-collector
-      - solr-server
     volumes:
       - {AGENT_FILE_PATH}:/usr/local/skywalking-solr-scenario/agent
+    networks:
+      - solr
     depends_on:
       mock-collector:
         condition: service_healthy
