@@ -1,14 +1,13 @@
-version: '2.1'
+version: '2.3'
 services:
   solr1:
     image: solr:7.7.1
     volumes:
-      - /root/skywalking/skywalking-agent:/usr/local/skywalking-solr-scenario/agent
+      - {AGENT_FILE_PATH}:/usr/local/skywalking-solr-scenario/agent
     ports:
      - "8983:8983"
     environment:
       - ZK_HOST=zoo1:2181
-      - SOLR_OPTS=-javaagent:/usr/local/skywalking-solr-scenario/agent/skywalking-agent.jar -Dskywalking.collector.grpc_channel_check_interval=2 -Dskywalking.collector.app_and_service_register_check_interval=2 -Dcollector.discovery_check_interval=2 -Dskywalking.collector.backend_service=172.17.0.1:11800 -Dskywalking.agent.service_name=solr_scenario_01
     networks:
       - solr
     depends_on:
@@ -17,12 +16,11 @@ services:
   solr2:
     image: solr:7.7.1
     volumes:
-      - /root/skywalking/skywalking-agent:/usr/local/skywalking-solr-scenario/agent
+      - {AGENT_FILE_PATH}:/usr/local/skywalking-solr-scenario/agent
     ports:
      - "8984:8983"
     environment:
       - ZK_HOST=zoo1:2181
-      - SOLR_OPTS=-javaagent:/usr/local/skywalking-solr-scenario/agent/skywalking-agent.jar -Dskywalking.collector.grpc_channel_check_interval=2 -Dskywalking.collector.app_and_service_register_check_interval=2 -Dcollector.discovery_check_interval=2 -Dskywalking.collector.backend_service=172.17.0.1:11800 -Dskywalking.agent.service_name=solr_scenario_02
     networks:
       - solr
     depends_on:
@@ -41,7 +39,7 @@ services:
       - solr
 
   solr-scenario:
-    image: skywalking/solr-scenario:{CASES_IMAGE_VERSION}
+    image: skywalking/solr-scenario:7.7.1
     expose:
       - 8080
     ports:
@@ -51,7 +49,9 @@ services:
       - ZK_HOST=zoo1:2181
       - SOLR_HOST=solr1:8983
     links:
-      - mock-collector
+      - zoo1
+      - solr1
+      - solr2
     volumes:
       - {AGENT_FILE_PATH}:/usr/local/skywalking-solr-scenario/agent
     networks:
@@ -76,6 +76,3 @@ services:
 
 networks:
   solr:
-
-volumes:
-  data:

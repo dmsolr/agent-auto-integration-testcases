@@ -23,10 +23,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
+import org.apache.solr.client.solrj.request.CollectionAdminRequest;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.solr.common.params.CommonParams;
 import org.apache.solr.common.params.ModifiableSolrParams;
+import org.apache.solr.common.util.NamedList;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,7 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/solrj-scenario/case")
+@RequestMapping("/solr-scenario/case")
 public class CaseController {
     private Logger logger = LogManager.getLogger(CaseController.class);
 
@@ -46,9 +48,14 @@ public class CaseController {
 
     private String collection = "mycore";
 
-    @GetMapping("/solrj")
-    public String solrj() throws SolrServerException, IOException {
+    @GetMapping("/solr")
+    public String solr() throws SolrServerException, IOException {
         HttpSolrClient client = getClient();
+
+        CollectionAdminRequest.Create creater = CollectionAdminRequest.createCollection(collection, "_default", 2, 2);
+        creater.setMaxShardsPerNode(2);
+        client.request(creater);
+
         add(client);
 
         commit(client);
