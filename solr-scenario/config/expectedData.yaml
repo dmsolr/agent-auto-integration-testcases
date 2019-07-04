@@ -33,8 +33,8 @@ segmentItems:
       refs:
       - {parentEndpointId: 0, parentEndpoint: /solr-scenario/case/solr, networkAddressId: 0,
         entryEndpointId: 0, refType: CrossProcess, parentSpanId: ge 0, parentTraceSegmentId: not null,
-        parentServiceInstanceId: 2, networkAddress: 'solr-server:8983', entryEndpoint: /solr-scenario/case/solr,
-        entryServiceInstanceId: 2}
+        parentServiceInstanceId: ge 0, networkAddress: 'solr-server:8983', entryEndpoint: /solr-scenario/case/solr,
+        entryServiceInstanceId: ge 0}
   - segmentId: not null
     spans:
     - operationName: Solr/mycore/select
@@ -53,8 +53,8 @@ segmentItems:
       refs:
       - {parentEndpointId: 0, parentEndpoint: /solr-scenario/case/solr, networkAddressId: 0,
         entryEndpointId: 0, refType: CrossProcess, parentSpanId: ge 0, parentTraceSegmentId: not null,
-        parentServiceInstanceId: 2, networkAddress: 'solr-server:8983', entryEndpoint: /solr-scenario/case/solr,
-        entryServiceInstanceId: 2}
+        parentServiceInstanceId: ge 0, networkAddress: 'solr-server:8983', entryEndpoint: /solr-scenario/case/solr,
+        entryServiceInstanceId: ge 0}
   - segmentId: not null
     spans:
     - operationName: Solr/mycore/get
@@ -73,8 +73,8 @@ segmentItems:
       refs:
       - {parentEndpointId: 0, parentEndpoint: /solr-scenario/case/solr, networkAddressId: 0,
         entryEndpointId: 0, refType: CrossProcess, parentSpanId: ge 0, parentTraceSegmentId: not null,
-        parentServiceInstanceId: 2, networkAddress: 'solr-server:8983', entryEndpoint: /solr-scenario/case/solr,
-        entryServiceInstanceId: 2}
+        parentServiceInstanceId: ge 0, networkAddress: 'solr-server:8983', entryEndpoint: /solr-scenario/case/solr,
+        entryServiceInstanceId: ge 0}
 - applicationCode: solr-client-scenario
   segmentSize: 1
   segments:
