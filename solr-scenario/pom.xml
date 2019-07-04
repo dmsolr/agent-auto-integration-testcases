@@ -26,11 +26,6 @@
     <dependencies>
         <dependency>
             <groupId>org.apache.solr</groupId>
-            <artifactId>solr-core</artifactId>
-            <version>${test.framework.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.solr</groupId>
             <artifactId>solr-solrj</artifactId>
             <version>${test.framework.version}</version>
         </dependency>
@@ -78,6 +73,72 @@
             <id>solr-scenario-7.7.1</id>
             <properties>
                 <test.framework.version>7.7.1</test.framework.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>solr-scenario-7.7.0</id>
+            <properties>
+                <test.framework.version>7.7.0</test.framework.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>solr-scenario-7.6.0</id>
+            <properties>
+                <test.framework.version>7.6.0</test.framework.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>solr-scenario-7.5.0</id>
+            <properties>
+                <test.framework.version>7.5.0</test.framework.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>solr-scenario-7.4.0</id>
+            <properties>
+                <test.framework.version>7.4.0</test.framework.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>solr-scenario-7.3.1</id>
+            <properties>
+                <test.framework.version>7.3.1</test.framework.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>solr-scenario-7.3.0</id>
+            <properties>
+                <test.framework.version>7.3.0</test.framework.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>solr-scenario-7.2.1</id>
+            <properties>
+                <test.framework.version>7.2.1</test.framework.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>solr-scenario-7.2.0</id>
+            <properties>
+                <test.framework.version>7.2.0</test.framework.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>solr-scenario-7.1.0</id>
+            <properties>
+                <test.framework.version>7.1.0</test.framework.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>solr-scenario-7.0.1</id>
+            <properties>
+                <test.framework.version>7.0.1</test.framework.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>solr-scenario-7.0.0</id>
+            <properties>
+                <test.framework.version>7.0.0</test.framework.version>
             </properties>
         </profile>
     </profiles>

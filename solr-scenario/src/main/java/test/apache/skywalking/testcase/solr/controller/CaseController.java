@@ -37,6 +37,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @RestController
 @RequestMapping("/solr-scenario/case")
@@ -51,10 +53,7 @@ public class CaseController {
     @GetMapping("/solr")
     public String solr() throws SolrServerException, IOException {
         HttpSolrClient client = getClient();
-
-        CollectionAdminRequest.Create creater = CollectionAdminRequest.createCollection(collection, "_default", 2, 2);
-        creater.setMaxShardsPerNode(2);
-        client.request(creater);
+//        init(client);
 
         add(client);
 
@@ -72,6 +71,15 @@ public class CaseController {
 
         client.close();
         return "Success";
+    }
+
+    boolean status = false;
+    synchronized void init(HttpSolrClient client) throws IOException, SolrServerException {
+        if (status) return;
+        CollectionAdminRequest.Create creater = CollectionAdminRequest.createCollection(collection, "_default", 2, 2);
+        creater.setMaxShardsPerNode(2);
+        client.request(creater);
+        status = true;
     }
 
     public String add(HttpSolrClient client) throws SolrServerException, IOException {
